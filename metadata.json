@@ -1,0 +1,6 @@
+{
+  "name": "VoiceDoc",
+  "description": "Progressive Web App for voice-to-document recording, AI structuring, and Word document export.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

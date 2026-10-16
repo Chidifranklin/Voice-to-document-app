@@ -1,0 +1,56 @@
+{
+  "entities": {
+    "Document": {
+      "title": "Document",
+      "description": "User voice-transcribed and AI-formatted document record.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique document identifier."
+        },
+        "userId": {
+          "type": "string",
+          "description": "UID of the user who owns this document."
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the document.",
+          "maxLength": 300
+        },
+        "template": {
+          "type": "string",
+          "description": "Template style used: Meeting Notes, Lecture Notes, Memo, Letter, Journal, etc.",
+          "maxLength": 100
+        },
+        "transcript": {
+          "type": "string",
+          "description": "Original or edited raw spoken transcript.",
+          "maxLength": 100000
+        },
+        "content": {
+          "type": "string",
+          "description": "AI-generated structured document content with headings, paragraphs, and bullet points.",
+          "maxLength": 200000
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the document was initially created."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the document was last updated."
+        }
+      },
+      "required": ["userId", "title", "template", "transcript", "content"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}/documents/{documentId}": {
+      "schema": "Document",
+      "description": "User documents collection storing transcribed and AI-formatted docs."
+    }
+  }
+}

@@ -1,0 +1,54 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Global Default-Deny Catch-All
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isValidDocument(data, userId) {
+      return data.keys().hasAll(['userId', 'title', 'template', 'transcript', 'content']) &&
+        data.keys().hasOnly(['id', 'userId', 'title', 'template', 'transcript', 'content', 'createdAt', 'updatedAt']) &&
+        data.userId == userId &&
+        data.userId == request.auth.uid &&
+        data.title is string && data.title.size() > 0 && data.title.size() <= 300 &&
+        data.template is string && data.template.size() > 0 && data.template.size() <= 100 &&
+        data.transcript is string && data.transcript.size() <= 100000 &&
+        data.content is string && data.content.size() <= 200000 &&
+        (!('id' in data) || (data.id is string && data.id.size() <= 128)) &&
+        (!('createdAt' in data) || (data.createdAt is string && data.createdAt.size() <= 64)) &&
+        (!('updatedAt' in data) || (data.updatedAt is string && data.updatedAt.size() <= 64));
+    }
+
+    match /users/{userId}/documents/{documentId} {
+      allow get: if isOwner(userId) && isValidId(userId) && isValidId(documentId);
+      allow list: if isOwner(userId) && isValidId(userId);
+      allow create: if isOwner(userId) && isValidId(userId) && isValidId(documentId) &&
+        isValidDocument(incoming(), userId);
+      allow update: if isOwner(userId) && isValidId(userId) && isValidId(documentId) &&
+        isValidDocument(incoming(), userId) &&
+        incoming().userId == existing().userId;
+      allow delete: if isOwner(userId) && isValidId(userId) && isValidId(documentId);
+    }
+  }
+}
