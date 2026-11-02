@@ -73,7 +73,7 @@ export const RecordScreen: React.FC<RecordScreenProps> = ({
       </div>
 
       {/* Transcription Engine Toggle */}
-      <div className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-1.5 flex gap-1 shadow-xs">
+      <div className="rounded-2xl bg-[#FFFDF8] dark:bg-slate-900 border border-[#E6DEC8] dark:border-slate-800 p-1.5 flex gap-1 shadow-xs">
         <button
           type="button"
           onClick={() => speech.setTranscriptionMode('gemini-3.5-transcribe')}
@@ -256,7 +256,7 @@ export const RecordScreen: React.FC<RecordScreenProps> = ({
 
         {/* Live Timer & Recording Status Indicator */}
         <div className="mt-6 text-center space-y-1.5">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-[#F4EFE4] dark:bg-slate-800 border border-[#E6DEC8] dark:border-slate-700 text-slate-700 dark:text-slate-300">
             {speech.isRecording ? (
               <>
                 <span className="h-2 w-2 rounded-full bg-rose-500 animate-pulse" />
@@ -302,7 +302,7 @@ export const RecordScreen: React.FC<RecordScreenProps> = ({
 
       {/* Audio Playback Player when recorded audio exists */}
       {speech.recordedAudioUrl && !speech.isRecording && (
-        <div className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-3.5 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-xs">
+        <div className="rounded-2xl bg-[#FFFDF8] dark:bg-slate-900 border border-[#E6DEC8] dark:border-slate-800 p-3.5 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-xs">
           <div className="flex items-center gap-2.5 text-xs text-slate-700 dark:text-slate-300">
             <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400">
               <Play className="w-4 h-4 fill-current" />
@@ -320,8 +320,8 @@ export const RecordScreen: React.FC<RecordScreenProps> = ({
       )}
 
       {/* Live Transcript Display Box */}
-      <div className="rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800/90 p-5 shadow-lg shadow-slate-100 dark:shadow-none space-y-3">
-        <div className="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800">
+      <div className="rounded-3xl bg-[#FFFDF8] dark:bg-slate-900 border border-[#E6DEC8] dark:border-slate-800/90 p-5 shadow-lg shadow-[#E6DEC8]/40 dark:shadow-none space-y-3">
+        <div className="flex items-center justify-between pb-2 border-b border-[#EFE9DA] dark:border-slate-800">
           <div className="flex items-center gap-2">
             <Radio className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
             <span className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
@@ -353,7 +353,7 @@ export const RecordScreen: React.FC<RecordScreenProps> = ({
         </div>
 
         {/* Text scroll window */}
-        <div className="min-h-[140px] max-h-[220px] overflow-y-auto rounded-xl p-3 bg-slate-50/70 dark:bg-slate-950/50 text-sm leading-relaxed text-slate-800 dark:text-slate-200">
+        <div className="min-h-[140px] max-h-[220px] overflow-y-auto rounded-xl p-3 bg-[#FAF6EE] dark:bg-slate-950/50 border border-[#EFE9DA] dark:border-slate-800/60 text-sm leading-relaxed text-slate-800 dark:text-slate-200">
           {speech.isTranscribingAudio ? (
             <div className="h-full flex flex-col items-center justify-center text-center py-8 space-y-2">
               <div className="h-6 w-6 rounded-full border-2 border-indigo-600 border-t-transparent animate-spin" />
@@ -490,7 +490,7 @@ export const RecordScreen: React.FC<RecordScreenProps> = ({
           type="button"
           onClick={() => fileInputRef.current?.click()}
           disabled={speech.isRecording || speech.isTranscribingAudio}
-          className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 font-semibold text-xs sm:text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition shadow-xs disabled:opacity-50"
+          className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-2xl border border-[#E6DEC8] dark:border-slate-800 bg-[#FFFDF8] dark:bg-slate-900 text-slate-700 dark:text-slate-200 font-semibold text-xs sm:text-sm hover:bg-[#F4EFE4] dark:hover:bg-slate-800 transition shadow-xs disabled:opacity-50"
         >
           <FileAudio className="w-4 h-4 text-indigo-500" />
           <span>Upload Audio File</span>

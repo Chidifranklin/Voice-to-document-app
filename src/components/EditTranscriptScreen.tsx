@@ -83,7 +83,7 @@ export const EditTranscriptScreen: React.FC<EditTranscriptScreenProps> = ({
       </div>
 
       {/* Transcript Textarea Card */}
-      <div className="rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 sm:p-5 shadow-xs space-y-2">
+      <div className="rounded-3xl bg-[#FFFDF8] dark:bg-slate-900 border border-[#E6DEC8] dark:border-slate-800 p-4 sm:p-5 shadow-xs space-y-2">
         <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 pb-1">
           <span className="font-semibold uppercase tracking-wider text-[11px] text-slate-700 dark:text-slate-300">
             Spoken Transcript (Editable)
@@ -97,7 +97,7 @@ export const EditTranscriptScreen: React.FC<EditTranscriptScreenProps> = ({
           rows={7}
           disabled={isGenerating}
           placeholder="Speak or type your content here..."
-          className="w-full rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-950/60 p-3.5 text-sm leading-relaxed text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition resize-y font-normal"
+          className="w-full rounded-2xl border border-[#E6DEC8] dark:border-slate-800 bg-[#FAF6EE] dark:bg-slate-950/60 p-3.5 text-sm leading-relaxed text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition resize-y font-normal"
         />
       </div>
 
@@ -124,14 +124,14 @@ export const EditTranscriptScreen: React.FC<EditTranscriptScreenProps> = ({
                 className={`relative flex items-start gap-3 p-3.5 rounded-2xl text-left border transition-all ${
                   isSelected
                     ? 'border-indigo-600 bg-indigo-50/70 dark:bg-indigo-950/40 shadow-sm shadow-indigo-600/10 ring-2 ring-indigo-600/30'
-                    : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-slate-300 dark:hover:border-slate-700'
+                    : 'border-[#E6DEC8] dark:border-slate-800 bg-[#FFFDF8] dark:bg-slate-900 hover:border-[#D5CBB4] dark:hover:border-slate-700'
                 }`}
               >
                 <div
                   className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${
                     isSelected
                       ? 'bg-indigo-600 text-white shadow-xs'
-                      : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
+                      : 'bg-[#F4EFE4] dark:bg-slate-800 text-slate-600 dark:text-slate-400'
                   }`}
                 >
                   {getTemplateIcon(tmpl.id)}
@@ -156,7 +156,7 @@ export const EditTranscriptScreen: React.FC<EditTranscriptScreenProps> = ({
       </div>
 
       {/* Optional Custom Instructions */}
-      <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4">
+      <div className="rounded-2xl border border-[#E6DEC8] dark:border-slate-800 bg-[#FFFDF8] dark:bg-slate-900 p-4">
         <button
           type="button"
           onClick={() => setShowCustomInstructions((prev) => !prev)}
@@ -172,13 +172,13 @@ export const EditTranscriptScreen: React.FC<EditTranscriptScreenProps> = ({
         </button>
 
         {showCustomInstructions && (
-          <div className="mt-3 pt-3 border-t border-slate-100 dark:border-slate-800 space-y-1.5 animate-in fade-in">
+          <div className="mt-3 pt-3 border-t border-[#EFE9DA] dark:border-slate-800 space-y-1.5 animate-in fade-in">
             <input
               type="text"
               value={customInstructions}
               onChange={(e) => setCustomInstructions(e.target.value)}
               placeholder="e.g. Emphasize budget decisions, write in British English, or highlight deadlines"
-              className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 rounded-xl border border-[#E6DEC8] dark:border-slate-800 bg-[#FAF6EE] dark:bg-slate-950 text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
             <p className="text-[11px] text-slate-400">
               VoiceDoc will instruct Gemini to take this into account while cleaning and organizing.

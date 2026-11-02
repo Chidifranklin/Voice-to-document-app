@@ -253,7 +253,7 @@ export const DocumentPreviewScreen: React.FC<DocumentPreviewScreenProps> = ({
           {/* New Recording Button */}
           <button
             onClick={onNewRecording}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border border-[#E6DEC8] dark:border-slate-800 bg-[#FFFDF8] dark:bg-transparent text-slate-700 dark:text-slate-200 hover:bg-[#F4EFE4] dark:hover:bg-slate-800 transition"
           >
             <PlusCircle className="w-4 h-4 text-indigo-500" />
             <span className="hidden xs:inline">New Voice Note</span>
@@ -262,7 +262,7 @@ export const DocumentPreviewScreen: React.FC<DocumentPreviewScreenProps> = ({
       </div>
 
       {/* Title & Metadata Card */}
-      <div className="rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 shadow-xs space-y-3">
+      <div className="rounded-3xl bg-[#FFFDF8] dark:bg-slate-900 border border-[#E6DEC8] dark:border-slate-800 p-5 shadow-xs space-y-3">
         <div>
           <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">
             Document Title (Editable)
@@ -271,12 +271,12 @@ export const DocumentPreviewScreen: React.FC<DocumentPreviewScreenProps> = ({
             type="text"
             value={title}
             onChange={(e) => onTitleChange(e.target.value)}
-            className="w-full text-lg sm:text-xl font-bold text-slate-900 dark:text-white bg-transparent border-b border-transparent hover:border-slate-300 dark:hover:border-slate-700 focus:border-indigo-500 focus:outline-none transition py-1"
+            className="w-full text-lg sm:text-xl font-bold text-slate-900 dark:text-white bg-transparent border-b border-transparent hover:border-[#D5CBB4] dark:hover:border-slate-700 focus:border-indigo-500 focus:outline-none transition py-1"
             placeholder="Document Title"
           />
         </div>
 
-        <div className="flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-slate-100 dark:border-slate-800 text-xs">
+        <div className="flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-[#EFE9DA] dark:border-slate-800 text-xs">
           <div className="flex items-center gap-2">
             <span className="inline-flex items-center px-2.5 py-0.5 rounded-full font-semibold bg-indigo-50 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-400">
               {template}
@@ -285,12 +285,12 @@ export const DocumentPreviewScreen: React.FC<DocumentPreviewScreenProps> = ({
           </div>
 
           {/* Tab Switcher: Formatted View vs Raw Edit */}
-          <div className="flex items-center rounded-xl bg-slate-100 dark:bg-slate-800 p-0.5">
+          <div className="flex items-center rounded-xl bg-[#F4EFE4] dark:bg-slate-800 p-0.5">
             <button
               onClick={() => setActiveTab('preview')}
               className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition ${
                 activeTab === 'preview'
-                  ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-xs font-semibold'
+                  ? 'bg-[#FFFDF8] dark:bg-slate-900 text-slate-900 dark:text-white shadow-xs font-semibold'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
@@ -301,7 +301,7 @@ export const DocumentPreviewScreen: React.FC<DocumentPreviewScreenProps> = ({
               onClick={() => setActiveTab('edit')}
               className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition ${
                 activeTab === 'edit'
-                  ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-xs font-semibold'
+                  ? 'bg-[#FFFDF8] dark:bg-slate-900 text-slate-900 dark:text-white shadow-xs font-semibold'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
@@ -313,7 +313,7 @@ export const DocumentPreviewScreen: React.FC<DocumentPreviewScreenProps> = ({
       </div>
 
       {/* Document Content View / Editor Card */}
-      <div className="rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 sm:p-7 shadow-xs">
+      <div className="rounded-3xl bg-[#FFFDF8] dark:bg-slate-900 border border-[#E6DEC8] dark:border-slate-800 p-5 sm:p-7 shadow-xs">
         {activeTab === 'preview' ? (
           <div className="min-h-[300px]">
             {renderFormattedPreview(content)}
@@ -328,7 +328,7 @@ export const DocumentPreviewScreen: React.FC<DocumentPreviewScreenProps> = ({
               value={content}
               onChange={(e) => onContentChange(e.target.value)}
               rows={14}
-              className="w-full rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-950/70 p-4 text-sm font-mono leading-relaxed text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition resize-y"
+              className="w-full rounded-2xl border border-[#E6DEC8] dark:border-slate-800 bg-[#FAF6EE] dark:bg-slate-950/70 p-4 text-sm font-mono leading-relaxed text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition resize-y"
             />
           </div>
         )}
@@ -354,7 +354,7 @@ export const DocumentPreviewScreen: React.FC<DocumentPreviewScreenProps> = ({
         <button
           onClick={handleShare}
           disabled={isSharing}
-          className="flex items-center justify-center gap-2 py-3.5 px-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 font-bold text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition shadow-xs disabled:opacity-50"
+          className="flex items-center justify-center gap-2 py-3.5 px-4 rounded-2xl border border-[#E6DEC8] dark:border-slate-800 bg-[#FFFDF8] dark:bg-slate-900 text-slate-800 dark:text-slate-100 font-bold text-sm hover:bg-[#F4EFE4] dark:hover:bg-slate-800 transition shadow-xs disabled:opacity-50"
         >
           {isSharing ? (
             <div className="h-4 w-4 rounded-full border-2 border-current border-t-transparent animate-spin" />
@@ -367,7 +367,7 @@ export const DocumentPreviewScreen: React.FC<DocumentPreviewScreenProps> = ({
         {/* Copy to clipboard Button */}
         <button
           onClick={handleCopyText}
-          className="flex items-center justify-center gap-2 py-3.5 px-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 font-bold text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition shadow-xs"
+          className="flex items-center justify-center gap-2 py-3.5 px-4 rounded-2xl border border-[#E6DEC8] dark:border-slate-800 bg-[#FFFDF8] dark:bg-slate-900 text-slate-800 dark:text-slate-100 font-bold text-sm hover:bg-[#F4EFE4] dark:hover:bg-slate-800 transition shadow-xs"
         >
           {copied ? (
             <Check className="w-4 h-4 text-emerald-500" />

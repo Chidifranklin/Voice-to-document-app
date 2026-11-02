@@ -1,1 +1,37 @@
 @import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --milky-bg: #FAF6EE;
+  --milky-bg-subtle: #F3EDE0;
+  --milky-surface: #FFFDF8;
+  --milky-surface-muted: #F5EFE4;
+  --milky-border: #E6DEC8;
+  --milky-border-subtle: #EFE9DA;
+  color-scheme: light;
+}
+
+.dark {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  background-color: var(--milky-bg);
+  color: #2A2520;
+  min-height: 100vh;
+}
+
+html:not(.dark) body {
+  background: radial-gradient(circle at 50% 0%, #FFFDF9 0%, #FAF6EE 60%, #F3ECE0 100%);
+  background-attachment: fixed;
+}
+
+html.dark,
+html.dark body,
+html.dark #root {
+  background-color: #090D16;
+  color: #F1F5F9;
+}

@@ -59,8 +59,8 @@ export default defineConfig(() => {
           name: 'VoiceDoc',
           short_name: 'VoiceDoc',
           description: 'Voice-to-document generator with live speech transcription and DOCX export.',
-          theme_color: '#4f46e5',
-          background_color: '#0f172a',
+          theme_color: '#FAF6EE',
+          background_color: '#FAF6EE',
           display: 'standalone',
           start_url: '/',
           scope: '/',
@@ -86,6 +86,7 @@ export default defineConfig(() => {
           ],
         },
         workbox: {
+          maximumFileSizeToCacheInBytes: 6 * 1024 * 1024,
           globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
           runtimeCaching: [
             {

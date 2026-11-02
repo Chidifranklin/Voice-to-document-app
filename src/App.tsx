@@ -211,7 +211,7 @@ function VoiceDocMain() {
   // Auth loading splash
   if (authLoading) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 dark:bg-slate-950 p-4">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#FAF6EE] dark:bg-slate-950 p-4">
         <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-indigo-600 text-white shadow-xl shadow-indigo-600/30 animate-bounce">
           <Mic className="w-8 h-8" />
         </div>
@@ -228,7 +228,7 @@ function VoiceDocMain() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors">
+    <div className="min-h-screen flex flex-col bg-[#FAF6EE] dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors">
       {/* Header */}
       <Header
         docCount={savedDocs.length}

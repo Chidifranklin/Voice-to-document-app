@@ -28,7 +28,7 @@ export const Header: React.FC<HeaderProps> = ({
   const [showUserMenu, setShowUserMenu] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-slate-200/80 dark:border-slate-800/80 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md transition-colors">
+    <header className="sticky top-0 z-40 w-full border-b border-[#E6DEC8]/90 dark:border-slate-800/80 bg-[#FFFDF8]/90 dark:bg-slate-900/80 backdrop-blur-md transition-colors">
       <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
         {/* Brand */}
         <div className="flex items-center gap-2.5">
@@ -67,7 +67,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Test Security Rules Button */}
           <button
             onClick={onOpenSecurityTest}
-            className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors border border-slate-200 dark:border-slate-800"
+            className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-300 bg-[#FAF6EE] dark:bg-transparent hover:bg-[#EFE8D8] dark:hover:bg-slate-800 transition-colors border border-[#E6DEC8] dark:border-slate-800"
             title="Verify Firestore Security Rules"
           >
             <ShieldCheck className="w-4 h-4 text-emerald-500" />
@@ -77,7 +77,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Library Button */}
           <button
             onClick={onOpenLibrary}
-            className="relative flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+            className="relative flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold bg-[#F4EFE4] dark:bg-slate-800 border border-[#E6DEC8] dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-[#EBE3D3] dark:hover:bg-slate-700 transition-colors"
             title="My Saved Documents"
           >
             <FolderOpen className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
@@ -96,7 +96,7 @@ export const Header: React.FC<HeaderProps> = ({
             <div className="relative">
               <button
                 onClick={() => setShowUserMenu((v) => !v)}
-                className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-tr from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-800 text-slate-700 dark:text-slate-200 overflow-hidden border border-slate-300 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-tr from-[#EFE8D8] to-[#E5DCC8] dark:from-slate-700 dark:to-slate-800 text-slate-700 dark:text-slate-200 overflow-hidden border border-[#DFD6C2] dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 title={user.email || 'User Account'}
               >
                 {user.photoURL ? (
@@ -111,8 +111,8 @@ export const Header: React.FC<HeaderProps> = ({
               </button>
 
               {showUserMenu && (
-                <div className="absolute right-0 mt-2 w-64 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl py-2 z-50 animate-in fade-in">
-                  <div className="px-4 py-2 border-b border-slate-100 dark:border-slate-800">
+                <div className="absolute right-0 mt-2 w-64 rounded-2xl bg-[#FFFDF8] dark:bg-slate-900 border border-[#E6DEC8] dark:border-slate-800 shadow-xl py-2 z-50 animate-in fade-in">
+                  <div className="px-4 py-2 border-b border-[#EFE9DA] dark:border-slate-800">
                     <p className="text-xs font-semibold text-slate-900 dark:text-white truncate">
                       {user.displayName || 'VoiceDoc User'}
                     </p>

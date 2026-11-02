@@ -94,7 +94,7 @@ export const AuthScreen: React.FC = () => {
   const displayedError = localError || error;
 
   return (
-    <div className="min-h-screen flex flex-col justify-between bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 p-4 transition-colors">
+    <div className="min-h-screen flex flex-col justify-between bg-[#FAF6EE] dark:bg-slate-950 text-slate-900 dark:text-slate-100 p-4 transition-colors">
       {/* Top Bar with theme toggle & PWA Install */}
       <div className="w-full max-w-md mx-auto flex items-center justify-between pt-2">
         <div className="flex items-center gap-2">
@@ -111,7 +111,7 @@ export const AuthScreen: React.FC = () => {
 
       {/* Main Auth Card */}
       <div className="w-full max-w-md mx-auto my-auto py-6">
-        <div className="rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-xl shadow-slate-200/50 dark:shadow-none">
+        <div className="rounded-3xl bg-[#FFFDF8] dark:bg-slate-900 border border-[#E6DEC8] dark:border-slate-800 p-6 sm:p-8 shadow-xl shadow-[#E6DEC8]/50 dark:shadow-none">
           {/* Header */}
           <div className="text-center mb-6">
             <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 mb-3 shadow-inner">
@@ -157,7 +157,7 @@ export const AuthScreen: React.FC = () => {
                 type="button"
                 onClick={handleGoogleSignIn}
                 disabled={isLoading}
-                className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-100 font-semibold text-sm hover:bg-slate-50 dark:hover:bg-slate-750 transition-colors shadow-xs disabled:opacity-50"
+                className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl border border-[#DFD6C2] dark:border-slate-700 bg-[#FAF6EE] dark:bg-slate-800 text-slate-700 dark:text-slate-100 font-semibold text-sm hover:bg-[#F2ECE0] dark:hover:bg-slate-750 transition-colors shadow-xs disabled:opacity-50"
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24">
                   <path
@@ -184,18 +184,18 @@ export const AuthScreen: React.FC = () => {
                 type="button"
                 onClick={handleGuestSignIn}
                 disabled={isLoading}
-                className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl border border-indigo-200 dark:border-indigo-800/80 bg-indigo-50/60 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 font-semibold text-xs hover:bg-indigo-100/70 dark:hover:bg-indigo-900/50 transition-colors disabled:opacity-50"
+                className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl border border-indigo-200 dark:border-indigo-800/80 bg-indigo-50/70 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 font-semibold text-xs hover:bg-indigo-100/70 dark:hover:bg-indigo-900/50 transition-colors disabled:opacity-50"
               >
                 <Sparkles className="w-3.5 h-3.5 text-indigo-500" />
                 <span>Explore as Guest (Instant Access)</span>
               </button>
 
               <div className="relative flex items-center justify-center my-2">
-                <div className="border-t border-slate-200 dark:border-slate-800 w-full" />
-                <span className="bg-white dark:bg-slate-900 px-3 text-[11px] uppercase tracking-wider text-slate-400">
+                <div className="border-t border-[#E6DEC8] dark:border-slate-800 w-full" />
+                <span className="bg-[#FFFDF8] dark:bg-slate-900 px-3 text-[11px] uppercase tracking-wider text-slate-400">
                   Or with email
                 </span>
-                <div className="border-t border-slate-200 dark:border-slate-800 w-full" />
+                <div className="border-t border-[#E6DEC8] dark:border-slate-800 w-full" />
               </div>
             </div>
           )}
@@ -214,7 +214,7 @@ export const AuthScreen: React.FC = () => {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Jane Doe"
-                    className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+                    className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#DFD6C2] dark:border-slate-700 bg-[#FAF6EE] dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
                   />
                 </div>
               </div>
@@ -232,7 +232,7 @@ export const AuthScreen: React.FC = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="name@example.com"
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#DFD6C2] dark:border-slate-700 bg-[#FAF6EE] dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
                 />
               </div>
             </div>
@@ -262,7 +262,7 @@ export const AuthScreen: React.FC = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••"
-                    className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+                    className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#DFD6C2] dark:border-slate-700 bg-[#FAF6EE] dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
                   />
                 </div>
               </div>
