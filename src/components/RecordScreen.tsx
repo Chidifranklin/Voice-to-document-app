@@ -158,11 +158,21 @@ export const RecordScreen: React.FC<RecordScreenProps> = ({
 
           <div className="pt-2 border-t border-amber-200/60 dark:border-amber-900/60 flex flex-wrap items-center gap-2">
             <button
-              onClick={speech.startRecording}
+              onClick={() => {
+                speech.startRecording().catch(console.error);
+              }}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-600 text-white font-semibold hover:bg-amber-700 transition"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>Try Microphone Again</span>
+            </button>
+
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition shadow-xs"
+            >
+              <FileAudio className="w-3.5 h-3.5" />
+              <span>Upload Audio File Instead</span>
             </button>
 
             <button
@@ -222,7 +232,13 @@ export const RecordScreen: React.FC<RecordScreenProps> = ({
           {/* Big Record Button */}
           <button
             type="button"
-            onClick={speech.isRecording ? speech.stopRecording : speech.startRecording}
+            onClick={() => {
+              if (speech.isRecording) {
+                speech.stopRecording().catch(console.error);
+              } else {
+                speech.startRecording().catch(console.error);
+              }
+            }}
             className={`relative z-10 flex h-28 w-28 sm:h-32 sm:w-32 items-center justify-center rounded-full text-white shadow-2xl transition-all transform active:scale-95 focus:outline-none focus:ring-4 ${
               speech.isRecording
                 ? 'bg-gradient-to-tr from-rose-600 to-red-500 shadow-rose-500/50 focus:ring-rose-400 scale-105'
@@ -392,7 +408,9 @@ export const RecordScreen: React.FC<RecordScreenProps> = ({
               <span>Model: <code className="font-mono text-indigo-600 dark:text-indigo-400">{speech.transcriptionModel || 'gemini-3.5-transcribe'}</code></span>
             </span>
             <button
-              onClick={speech.transcribeRecordedAudioWithAI}
+              onClick={() => {
+                speech.transcribeRecordedAudioWithAI().catch(console.error);
+              }}
               disabled={speech.isTranscribingAudio}
               className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-indigo-600 text-white font-semibold hover:bg-indigo-700 shadow-sm transition disabled:opacity-50"
             >

@@ -165,22 +165,23 @@ export function useSpeechRecognition(): UseSpeechRecognitionReturn {
         setTranscriptionModel(data.model || 'gemini-3.5-transcribe');
         return resultText;
       } else if (liveWordsRef.current.trim().length > 0) {
-        // Fall back to live speech recognition if audio was silent
+        // Fall back to live speech recognition if audio was quiet
         setTranscript(liveWordsRef.current);
         return liveWordsRef.current;
+      } else {
+        setError('No spoken words were detected in that recording. Speak closer to the microphone or try uploading an audio file.');
+        return '';
       }
-
-      return resultText;
     } catch (e: any) {
       console.error('Audio transcription error:', e);
-      // If live words were collected from speech recognition, preserve them!
       if (liveWordsRef.current.trim().length > 0) {
         setTranscript(liveWordsRef.current);
-        setError(`AI audio transcription note: ${e.message}. Preserved live microphone transcript.`);
+        setError(`Transcription note: ${e.message}. Preserved live microphone transcript.`);
+        return liveWordsRef.current;
       } else {
         setError(`Audio transcription note: ${e.message}`);
+        return '';
       }
-      throw e;
     } finally {
       setIsTranscribingAudio(false);
     }
@@ -205,80 +206,102 @@ export function useSpeechRecognition(): UseSpeechRecognitionReturn {
     let recognitionStarted = false;
 
     // 1. Request microphone access via getUserMedia for MediaRecorder
-    if (navigator?.mediaDevices?.getUserMedia) {
+    if (!navigator?.mediaDevices?.getUserMedia) {
+      setIsPermissionDenied(true);
+      setError('Microphone access is not supported in this browser environment. You can upload an audio file or type your note.');
+      return;
+    }
+
+    let stream: MediaStream;
+    try {
       try {
-        const stream = await navigator.mediaDevices.getUserMedia({
+        stream = await navigator.mediaDevices.getUserMedia({
           audio: {
             echoCancellation: true,
             noiseSuppression: true,
             autoGainControl: true,
           },
         });
-        mediaStreamRef.current = stream;
-        setupAudioMeter(stream);
-        streamObtained = true;
+      } catch (constraintErr: any) {
+        // Fall back to basic audio constraint in case browser/device rejects advanced audio constraints
+        console.warn('getUserMedia constraint fallback to basic audio:', constraintErr);
+        stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      }
+    } catch (err: any) {
+      console.warn('getUserMedia error:', err);
+      const isPermission =
+        err?.name === 'NotAllowedError' ||
+        err?.name === 'PermissionDeniedError' ||
+        err?.name === 'SecurityError' ||
+        err?.message?.toLowerCase().includes('permission denied') ||
+        err?.message?.toLowerCase().includes('not allowed') ||
+        err?.message?.toLowerCase().includes('permission dismissed');
 
-        try {
-          let recorderOptions: MediaRecorderOptions = {};
-          if (typeof MediaRecorder.isTypeSupported === 'function') {
-            if (MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
-              recorderOptions = { mimeType: 'audio/webm;codecs=opus' };
-            } else if (MediaRecorder.isTypeSupported('audio/webm')) {
-              recorderOptions = { mimeType: 'audio/webm' };
-            } else if (MediaRecorder.isTypeSupported('audio/mp4')) {
-              recorderOptions = { mimeType: 'audio/mp4' };
-            } else if (MediaRecorder.isTypeSupported('audio/ogg')) {
-              recorderOptions = { mimeType: 'audio/ogg' };
-            }
-          }
+      setIsPermissionDenied(true);
+      if (isPermission) {
+        setError('Microphone permission was denied. Please allow microphone access in your browser or upload an audio file.');
+      } else {
+        setError(`Could not access microphone (${err?.message || 'hardware error'}). You can upload an audio file instead.`);
+      }
+      return; // Stop immediately - do NOT start recording state
+    }
 
-          const recorder = new MediaRecorder(stream, recorderOptions);
-          mediaRecorderRef.current = recorder;
+    mediaStreamRef.current = stream;
+    setupAudioMeter(stream);
+    streamObtained = true;
 
-          recorder.ondataavailable = (event) => {
-            if (event.data && event.data.size > 0) {
-              audioChunksRef.current.push(event.data);
-            }
-          };
-
-          recorder.onstop = () => {
-            // Stop media stream tracks after recording finished
-            if (mediaStreamRef.current) {
-              mediaStreamRef.current.getTracks().forEach((track) => track.stop());
-              mediaStreamRef.current = null;
-            }
-
-            if (audioChunksRef.current.length > 0) {
-              const detectedMime = recorder.mimeType || 'audio/webm';
-              const blob = new Blob(audioChunksRef.current, { type: detectedMime });
-              recordedBlobRef.current = blob;
-              setHasAudioRecording(true);
-              const url = URL.createObjectURL(blob);
-              setRecordedAudioUrl(url);
-
-              // Transcribe recorded microphone audio
-              executeGeminiTranscription(blob).catch((err) => {
-                console.warn('Transcription after stop error:', err);
-              });
-            }
-          };
-
-          recorder.start(500);
-        } catch (recErr) {
-          console.warn('MediaRecorder init skipped:', recErr);
-        }
-      } catch (err: any) {
-        console.warn('getUserMedia error:', err);
-        const isPermission =
-          err?.name === 'NotAllowedError' ||
-          err?.name === 'PermissionDeniedError' ||
-          err?.message?.toLowerCase().includes('permission denied') ||
-          err?.message?.toLowerCase().includes('not allowed');
-
-        if (isPermission) {
-          setIsPermissionDenied(true);
+    try {
+      let recorderOptions: MediaRecorderOptions = {};
+      if (typeof MediaRecorder.isTypeSupported === 'function') {
+        if (MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
+          recorderOptions = { mimeType: 'audio/webm;codecs=opus' };
+        } else if (MediaRecorder.isTypeSupported('audio/webm')) {
+          recorderOptions = { mimeType: 'audio/webm' };
+        } else if (MediaRecorder.isTypeSupported('audio/mp4')) {
+          recorderOptions = { mimeType: 'audio/mp4' };
+        } else if (MediaRecorder.isTypeSupported('audio/ogg')) {
+          recorderOptions = { mimeType: 'audio/ogg' };
         }
       }
+
+      const recorder = new MediaRecorder(stream, recorderOptions);
+      mediaRecorderRef.current = recorder;
+
+      recorder.ondataavailable = (event) => {
+        if (event.data && event.data.size > 0) {
+          audioChunksRef.current.push(event.data);
+        }
+      };
+
+      recorder.onstop = () => {
+        // Stop media stream tracks after recording finished
+        if (mediaStreamRef.current) {
+          mediaStreamRef.current.getTracks().forEach((track) => track.stop());
+          mediaStreamRef.current = null;
+        }
+
+        if (audioChunksRef.current.length > 0) {
+          const detectedMime = recorder.mimeType || 'audio/webm';
+          const blob = new Blob(audioChunksRef.current, { type: detectedMime });
+          recordedBlobRef.current = blob;
+          setHasAudioRecording(true);
+          const url = URL.createObjectURL(blob);
+          setRecordedAudioUrl(url);
+
+          // Transcribe recorded microphone audio
+          executeGeminiTranscription(blob).catch((err) => {
+            console.warn('Transcription after stop error:', err);
+          });
+        }
+      };
+
+      recorder.start(500);
+    } catch (recErr: any) {
+      console.warn('MediaRecorder init failed:', recErr);
+      setError(`MediaRecorder error: ${recErr.message || 'Could not initialize recorder'}`);
+      stream.getTracks().forEach((track) => track.stop());
+      mediaStreamRef.current = null;
+      return;
     }
 
     // 2. Setup Web Speech Recognition for real-time live preview
@@ -331,20 +354,9 @@ export function useSpeechRecognition(): UseSpeechRecognitionReturn {
         };
 
         recognition.start();
-        recognitionStarted = true;
       } catch (e: any) {
-        console.warn('SpeechRecognition start failed:', e);
-        if (e?.name === 'NotAllowedError' || e?.message?.includes('Permission denied')) {
-          setIsPermissionDenied(true);
-        }
+        console.warn('SpeechRecognition start failed (optional preview):', e);
       }
-    }
-
-    // If both failed to start
-    if (!streamObtained && !recognitionStarted) {
-      setIsPermissionDenied(true);
-      setError('Microphone permission is blocked in your browser. Please allow microphone access or load a sample note below.');
-      return;
     }
 
     // Start timer and recording state

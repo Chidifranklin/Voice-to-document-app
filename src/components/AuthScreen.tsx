@@ -1,11 +1,19 @@
 import React, { useState } from 'react';
-import { Mic, Mail, Lock, User as UserIcon, AlertCircle, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { Mic, Mail, Lock, User as UserIcon, AlertCircle, ArrowRight, CheckCircle2, Sparkles } from 'lucide-react';
 import { useAuth } from '../context/AuthContext.tsx';
 import { ThemeToggle } from './ThemeToggle.tsx';
 import { PWAInstallButton } from './PWAInstallButton.tsx';
 
 export const AuthScreen: React.FC = () => {
-  const { signInWithGoogle, signInWithEmail, signUpWithEmail, resetPassword, error, clearError } = useAuth();
+  const {
+    signInWithGoogle,
+    signInWithEmail,
+    signUpWithEmail,
+    signInAsGuest,
+    resetPassword,
+    error,
+    clearError,
+  } = useAuth();
 
   const [mode, setMode] = useState<'signin' | 'signup' | 'forgot'>('signin');
   const [email, setEmail] = useState('');
@@ -23,6 +31,19 @@ export const AuthScreen: React.FC = () => {
       await signInWithGoogle();
     } catch (e: any) {
       setLocalError(e.message || 'Google sign-in failed');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleGuestSignIn = async () => {
+    setIsLoading(true);
+    setLocalError(null);
+    clearError();
+    try {
+      await signInAsGuest();
+    } catch (e: any) {
+      setLocalError(e.message || 'Guest sign-in failed');
     } finally {
       setIsLoading(false);
     }
@@ -157,6 +178,16 @@ export const AuthScreen: React.FC = () => {
                   />
                 </svg>
                 Continue with Google
+              </button>
+
+              <button
+                type="button"
+                onClick={handleGuestSignIn}
+                disabled={isLoading}
+                className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl border border-indigo-200 dark:border-indigo-800/80 bg-indigo-50/60 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 font-semibold text-xs hover:bg-indigo-100/70 dark:hover:bg-indigo-900/50 transition-colors disabled:opacity-50"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-indigo-500" />
+                <span>Explore as Guest (Instant Access)</span>
               </button>
 
               <div className="relative flex items-center justify-center my-2">

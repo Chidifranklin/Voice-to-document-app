@@ -8,6 +8,7 @@ import {
   signOut,
   sendPasswordResetEmail,
   updateProfile,
+  signInAnonymously,
 } from 'firebase/auth';
 import { auth, googleProvider } from '../services/firebase.ts';
 
@@ -17,6 +18,7 @@ interface AuthContextType {
   signInWithGoogle: () => Promise<void>;
   signInWithEmail: (email: string, pass: string) => Promise<void>;
   signUpWithEmail: (email: string, pass: string, displayName?: string) => Promise<void>;
+  signInAsGuest: () => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
   logout: () => Promise<void>;
   error: string | null;
@@ -106,6 +108,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const signInAsGuest = async () => {
+    setError(null);
+    try {
+      await signInAnonymously(auth);
+    } catch (err: any) {
+      console.warn('signInAnonymously failed, trying guest demo user:', err);
+      // Fallback in case anonymous auth is disabled on project: create demo guest user
+      const guestEmail = `guest_${Date.now().toString(36)}@voicedoc.app`;
+      const guestPass = 'GuestDoc123!';
+      try {
+        const res = await createUserWithEmailAndPassword(auth, guestEmail, guestPass);
+        if (res.user) {
+          await updateProfile(res.user, { displayName: 'Guest User' });
+        }
+      } catch (err2: any) {
+        setError(err.message || 'Could not sign in as guest.');
+        throw err;
+      }
+    }
+  };
+
   const logout = async () => {
     setError(null);
     try {
@@ -125,6 +148,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         signInWithGoogle,
         signInWithEmail,
         signUpWithEmail,
+        signInAsGuest,
         resetPassword,
         logout,
         error,
